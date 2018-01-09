@@ -1,5 +1,5 @@
 from flask import request, Blueprint
-from app import app, db
+from app import db
 from .consts import Commands, HELP_INFO, ReplyConst
 from .models import BillBook
 from .utils import parse_data
@@ -10,14 +10,17 @@ from datetime import datetime
 mod_bill = Blueprint("bill", __name__)
 
 
-@app.route("/")
+@mod_bill.route("/")
 def hello():
     return "Hello world!"
 
 
-@app.route("/wx", methods=["GET", "POST"])
+@mod_bill.route("/wx", methods=["GET", "POST"])
 def proxy():
-    data = request.data()
+    print(request.data)
+    print(request.form)
+    return
+    data = request.data
     if len(data) == 0:
         return ReplyConst.INVALID_PARAMETER_REPLY.value
     rec_msg = parse_data(data)
