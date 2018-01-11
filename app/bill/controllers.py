@@ -22,14 +22,14 @@ def verify():
         data = request.args
         if len(data) == 0:
             return "hello, this is handle view"
-        signature = data.signature
-        timestamp = data.timestamp
-        nonce = data.nonce
-        echo_str = data.echostr
+        signature = data.get("signature")
+        timestamp = data.get("timestamp")
+        nonce = data.get("nonce")
+        echo_str = data.get("echostr")
         token = "lipnux"  # 请按照公众平台官网\基本配置中信息填写
 
         request_info_list = [token, timestamp, nonce]
-        list.sort()
+        request_info_list.sort()
         sha1 = hashlib.sha1()
         map(sha1.update, request_info_list)
         hashcode = sha1.hexdigest()
