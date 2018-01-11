@@ -34,10 +34,11 @@ def verify():
         map(sha1.update, request_info_list)
         hashcode = sha1.hexdigest()
         print("handle/GET func: hashcode, signature: ", hashcode, signature)
-        if hashcode == signature:
-            return echo_str
-        else:
-            return ""
+        return echo_str
+        # if hashcode == signature:
+        #     return echo_str
+        # else:
+        #     return ""
     except Exception as e:
         return e
 
