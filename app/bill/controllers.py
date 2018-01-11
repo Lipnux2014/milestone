@@ -6,6 +6,7 @@ from .utils import parse_data
 from .dtos import *
 from .errors import InvalidInputError, ExceedAuthorityError
 from datetime import datetime
+import hashlib
 
 mod_bill = Blueprint("bill", __name__)
 
@@ -15,7 +16,33 @@ def hello():
     return "Hello world!"
 
 
-@mod_bill.route("/wx", methods=["GET", "POST"])
+@mod_bill.route("/wx", methods=["GET"])
+def verify():
+    try:
+        data = request.args
+        if len(data) == 0:
+            return "hello, this is handle view"
+        signature = data.signature
+        timestamp = data.timestamp
+        nonce = data.nonce
+        echo_str = data.echostr
+        token = "lipnux"  # 请按照公众平台官网\基本配置中信息填写
+
+        request_info_list = [token, timestamp, nonce]
+        list.sort()
+        sha1 = hashlib.sha1()
+        map(sha1.update, request_info_list)
+        hashcode = sha1.hexdigest()
+        print("handle/GET func: hashcode, signature: ", hashcode, signature)
+        if hashcode == signature:
+            return echo_str
+        else:
+            return ""
+    except Exception as e:
+        return e
+
+
+@mod_bill.route("/wx", methods=["POST"])
 def proxy():
     print(request.data)
     print(request.form)
