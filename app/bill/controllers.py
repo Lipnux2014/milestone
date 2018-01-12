@@ -2,7 +2,7 @@ from flask import request, Blueprint
 from app import db
 from .consts import Commands, HELP_INFO, ReplyConst
 from .models import BillBook
-from .utils import parse_data, return_wrapper, joint_bill_info
+from .utils import parse_data, return_wrapper, joint_bill_info, convert_reply
 from .dtos import *
 from .errors import InvalidInputError, ExceedAuthorityError
 from datetime import datetime
@@ -64,11 +64,11 @@ def proxy():
         else:
             return ReplyConst.SILENCE_WX.value
     except InvalidInputError as e:
-        return e.value
+        return convert_reply(e.value, rec_msg)
     except ExceedAuthorityError as e:
-        return e.value
+        return convert_reply(e.value, rec_msg)
     except:
-        return ReplyConst.UNKNOWN_ERROR_REPLY.value
+        return convert_reply(ReplyConst.UNKNOWN_ERROR_REPLY.value, rec_msg)
 
 
 @return_wrapper
