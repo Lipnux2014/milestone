@@ -21,6 +21,8 @@ HELP_INFO = """
     4、 del {ID} : 删除指定ID的记账信息
 """
 
+DEFAULT_BILL_ID = 0
+
 
 class ReplyConst(Enum):
     INSERT_SUCCESS_REPLY = "新增成功"
