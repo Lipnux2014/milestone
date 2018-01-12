@@ -6,7 +6,7 @@ if __name__ == "__main__":
     parse.add_argument("-d", "--debug", action="store_true", dest="debug_mode", default=False)
     parse.add_argument("-p", "--port", dest="port", default=5000)
     cmd_args = parse.parse_args()
-    app_options = {"port": cmd_args.port}
+    app_options = {"port": int(cmd_args.port)}
     if cmd_args.debug_mode:
         app_options["debug"] = True
         app_options["use_debugger"] = False
