@@ -52,7 +52,7 @@ def proxy():
     try:
         if isinstance(rec_msg, Msg) and rec_msg.msg_type == 'text':
             if rec_msg.content.lower() == Commands.HELP.value:
-                return HELP_INFO
+                return load_help_info(rec_msg)
             if rec_msg.content.lower() == Commands.GET.value:
                 return load_month(rec_msg)
             if rec_msg.content.lower() == Commands.GET_ALL.value:
@@ -69,6 +69,12 @@ def proxy():
         return e.value
     except:
         return ReplyConst.UNKNOWN_ERROR_REPLY.value
+
+
+@return_wrapper
+def load_help_info(rec_msg):
+    print(rec_msg)
+    return HELP_INFO
 
 
 @return_wrapper

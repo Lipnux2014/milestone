@@ -40,7 +40,23 @@ def return_wrapper(func):
             print(e)
         reply_dict["content"] = content
         return xml_form.format(**reply_dict)
+
     return add_return_info
+
+
+def convert_reply(return_str, rec_msg):
+    xml_form = """
+                    <xml>
+                    <ToUserName><![CDATA[{from_user_name}]]></ToUserName>
+                    <FromUserName><![CDATA[{to_user_name}]]></FromUserName>
+                    <CreateTime>{create_time}</CreateTime>
+                    <MsgType><![CDATA[text]]></MsgType>
+                    <Content><![CDATA[{content}]]></Content>
+                    </xml>
+                    """
+    rec_msg_dict = rec_msg.__dict__
+    rec_msg_dict["content"] = return_str
+    return xml_form.format(**rec_msg_dict)
 
 
 def joint_bill_info(bills):
